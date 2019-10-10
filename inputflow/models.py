@@ -131,3 +131,21 @@ class Input(models.Model):
         return result
 
 input_created = django.dispatch.Signal(providing_args=['input_data', 'input_type'])
+
+
+@python_2_unicode_compatible
+class Webhook(models.Model):
+    uid = models.UUIDField(_("UID"), max_length=60, unique=True, default=uuid.uuid4,
+        editable=False)
+    name = models.CharField(_("Name"), max_length=60, unique=True)
+    description = models.TextField(_("Description"), blank=True, default='')
+    settings = models.ForeignKey(InputSettings, verbose_name=_("Settings"),
+        blank=False, null=False, on_delete=models.PROTECT, related_name='webhooks')
+
+    class Meta:
+        verbose_name = _("Webhook")
+        verbose_name_plural = _("Webhooks")
+
+    def __str__(self):
+        return self.name
+

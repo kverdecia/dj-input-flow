@@ -33,21 +33,16 @@ class InputSettingsFieldInline(SortableTabularInline):
 
 
 class InputSettingsAdmin(NonSortableParentAdmin):
-    list_display = ('name', 'default_format', 'uid', 'webhook')
-    readonly_fields = ('uid', 'webhook',)
-    fields = ('uid', 'name', 'description', 'default_format', 'webhook')
+    list_display = ('name', 'default_format', 'uid')
+    readonly_fields = ('uid',)
+    fields = ('uid', 'name', 'description', 'default_format')
     inlines = [InputSettingsFieldInline]
     actions = ['update_field_definitions']
-
-    def webhook(self, obj):
-        return "asñdfjalkdsjflksajdflksad"
-        return obj.get_webhook_url()
-    webhook.short_description = _("Webhook")
 
     def get_fields(self, request, obj=None):
         if obj is None:
             return ('name', 'description', 'default_format')
-        return ('uid', 'name', 'description', 'default_format', 'webhook')
+        return ('uid', 'name', 'description', 'default_format')
 
     def update_field_definitions(self, request, queryset):
         for settings in queryset:
@@ -80,5 +75,12 @@ class InputAdmin(admin.ModelAdmin):
         self.message_user(request, ugettext("Updated field definitions"))
     update_field_definitions.short_description = _("Update field definitions")
 
+
+class WebhookAdmin(admin.ModelAdmin):
+    list_display = ('uid', 'name', 'settings')
+
+
 admin.site.register(models.InputSettings, InputSettingsAdmin)
 admin.site.register(models.Input, InputAdmin)
+admin.site.register(models.Webhook, WebhookAdmin)
+
