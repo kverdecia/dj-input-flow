@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-10 18:00-0300\n"
+"PO-Revision-Date: 2019-10-10 18:07-0300\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: dj-input-flow/inputflow/admin.py:45
+msgid "Webhook"
+msgstr "Webhook"
+
+#: dj-input-flow/inputflow/admin.py:55 dj-input-flow/inputflow/admin.py:80
+msgid "Updated field definitions"
+msgstr "Definiciones de campos actualizados"
+
+#: dj-input-flow/inputflow/admin.py:56 dj-input-flow/inputflow/admin.py:81
+msgid "Update field definitions"
+msgstr "Actualizar definiciones de campos"
+
+#: dj-input-flow/inputflow/apps.py:7
+msgid "Input flow"
+msgstr "Flujo de entrada"
+
+#: dj-input-flow/inputflow/models.py:19
+msgid "Form"
+msgstr "Formulario"
+
+#: dj-input-flow/inputflow/models.py:20
+msgid "JSON"
+msgstr "JSON"
+
+#: dj-input-flow/inputflow/models.py:22
+msgid "UID"
+msgstr "UID"
+
+#: dj-input-flow/inputflow/models.py:24
+msgid "Name"
+msgstr "Nombre"
+
+#: dj-input-flow/inputflow/models.py:25
+msgid "Description"
+msgstr "Descripción"
+
+#: dj-input-flow/inputflow/models.py:26 dj-input-flow/inputflow/models.py:78
+msgid "Default format"
+msgstr "Formato por defecto"
+
+#: dj-input-flow/inputflow/models.py:30 dj-input-flow/inputflow/models.py:31
+#: dj-input-flow/inputflow/models.py:50
+msgid "Input settings"
+msgstr "Configuraciones de entrada"
+
+#: dj-input-flow/inputflow/models.py:54
+msgid "Input name"
+msgstr "Nombre de entrada"
+
+#: dj-input-flow/inputflow/models.py:55
+msgid "Field name"
+msgstr "Nombre de campo"
+
+#: dj-input-flow/inputflow/models.py:56
+msgid "Example value"
+msgstr "Valor de ejemplo"
+
+#: dj-input-flow/inputflow/models.py:57
+msgid "Date format"
+msgstr "Formato de fecha"
+
+#: dj-input-flow/inputflow/models.py:58
+msgid "Default value"
+msgstr "Valor por defecto"
+
+#: dj-input-flow/inputflow/models.py:59
+msgid "Exclude if empty"
+msgstr "Excluir vacio"
+
+#: dj-input-flow/inputflow/models.py:60
+msgid "Omit"
+msgstr "Omitir"
+
+#: dj-input-flow/inputflow/models.py:63
+msgid "Input field"
+msgstr "Campo de entrada"
+
+#: dj-input-flow/inputflow/models.py:64
+msgid "Input fields"
+msgstr "Campos de entrada"
+
+#: dj-input-flow/inputflow/models.py:73
+msgid "Settings"
+msgstr "Configuración"
+
+#: dj-input-flow/inputflow/models.py:76
+msgid "Internal source"
+msgstr "Origen interno"
+
+#: dj-input-flow/inputflow/models.py:80
+msgid "Processed"
+msgstr "Procesado"
+
+#: dj-input-flow/inputflow/models.py:81
+msgid "Raw content"
+msgstr "Contenido bruto"
+
+#: dj-input-flow/inputflow/models.py:82
+msgid "Created"
+msgstr "Creado"
+
+#: dj-input-flow/inputflow/models.py:83
+msgid "Modified"
+msgstr "Modificado"
+
+#: dj-input-flow/inputflow/models.py:86
+msgid "Input"
+msgstr "Entrada"
+
+#: dj-input-flow/inputflow/models.py:87
+msgid "Inputs"
+msgstr "Entradas"
