@@ -11,6 +11,7 @@ from django.db import models
 import django.dispatch
 from adminsortable.models import SortableMixin
 from adminsortable.fields import SortableForeignKey
+from .utils import Utils
 
 
 @python_2_unicode_compatible
@@ -89,7 +90,7 @@ class Input(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         input_created.send_robust(sender=self.__class__, input_data=self.get_data(),
-            input_type=self.settings.uid)
+            input_type=self.settings.uid, input_id=self.pk)
 
     def get_raw_dict(self):
         if self.format == 'json':
@@ -125,9 +126,10 @@ class Input(models.Model):
                 value = raw_dict[field.input_name]
                 if field.date_format:
                     value = datetime.datetime.strptime(value, field.date_format)
-                result[field.output_name or field.input_name] = value
+                Utils.write_to_dict(result, field.output_name or field.input_name, value)
             elif not field.exclude_if_empty:
-                result[field.output_name or field.input_name] = field.default_value or None
+                Utils.write_to_dict(result, field.output_name or field.input_name,
+                    field.default_value or None)
         return result
 
 input_created = django.dispatch.Signal(providing_args=['input_data', 'input_type'])

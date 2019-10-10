@@ -62,7 +62,7 @@ class InputAdmin(admin.ModelAdmin):
         if obj is None:
             return ('settings', 'format', 'processed', 'raw_content')
         return ('settings', 'internal_source', 'format', 'processed', 'raw_content',
-            'created', 'modified')
+            'created', 'modified', 'data')
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
@@ -74,6 +74,11 @@ class InputAdmin(admin.ModelAdmin):
             settings.update_field_definitions()
         self.message_user(request, ugettext("Updated field definitions"))
     update_field_definitions.short_description = _("Update field definitions")
+
+    def data(self, obj=None):
+        if obj is None:
+            return None
+        return obj.get_data()
 
 
 class WebhookAdmin(admin.ModelAdmin):
