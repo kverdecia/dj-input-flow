@@ -7,6 +7,7 @@ import json
 from django.utils.translation import ugettext_lazy as _
 from django.utils.six import python_2_unicode_compatible
 from django.utils.six.moves.urllib.parse import parse_qs
+from django.urls import reverse
 from django.db import models
 import django.dispatch
 from adminsortable.models import SortableMixin
@@ -70,7 +71,7 @@ class InputSettingsField(SortableMixin):
         return self.input_name
 
 class Input(models.Model):
-    "Person data provided from zapier."
+    "Input data."
     settings = models.ForeignKey(InputSettings, verbose_name=_("Settings"),
         blank=False, null=False, on_delete=models.PROTECT,
         related_name='inputs')
@@ -142,7 +143,7 @@ class Webhook(models.Model):
     name = models.CharField(_("Name"), max_length=60, unique=True)
     description = models.TextField(_("Description"), blank=True, default='')
     settings = models.ForeignKey(InputSettings, verbose_name=_("Settings"),
-        blank=False, null=False, on_delete=models.PROTECT, related_name='webhooks')
+        blank=False, null=False, on_delete=models.CASCADE, related_name='webhooks')
 
     class Meta:
         verbose_name = _("Webhook")
@@ -150,4 +151,7 @@ class Webhook(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_webhook_url(self):
+        return reverse('inputflow:inputflow-webhook', args=(self.uid,))
 

@@ -82,10 +82,16 @@ class InputAdmin(admin.ModelAdmin):
 
 
 class WebhookAdmin(admin.ModelAdmin):
-    list_display = ('uid', 'name', 'settings')
+    list_display = ('uid', 'name', 'settings', 'url')
+    fields = ('uid', 'name', 'description', 'settings', 'url')
+    readonly_fields = ('uid', 'url')
+
+    def url(self, obj=None):
+        if obj is None:
+            return None
+        return obj.get_webhook_url()
 
 
 admin.site.register(models.InputSettings, InputSettingsAdmin)
 admin.site.register(models.Input, InputAdmin)
 admin.site.register(models.Webhook, WebhookAdmin)
-
