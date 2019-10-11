@@ -40,13 +40,9 @@ Add dj-input-flow's URL patterns:
 
 .. code-block:: python
 
-    from inputflow import urls as inputflow_urls
-
-
     urlpatterns = [
         ...
-        url(r'^inputflow/', include(inputflow_urls)),
-
+        path('inputflow/', include('inputflow.urls', 'inputflow'))
         ...
     ]
 
