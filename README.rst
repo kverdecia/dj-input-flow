@@ -31,7 +31,8 @@ Add it to your `INSTALLED_APPS`:
 
     INSTALLED_APPS = (
         ...
-        'inputflow.apps.InputFlowConfig',
+        'adminsortable',
+        'inputflow',
         ...
     )
 
@@ -44,7 +45,8 @@ Add dj-input-flow's URL patterns:
 
     urlpatterns = [
         ...
-        url(r'^', include(inputflow_urls)),
+        url(r'^inputflow/', include(inputflow_urls)),
+
         ...
     ]
 
