@@ -42,7 +42,7 @@ Add dj-input-flow's URL patterns:
 
     urlpatterns = [
         ...
-        path('inputflow/', include('inputflow.urls', 'inputflow'))
+        path('inputflow/', include('inputflow.urls', 'inputflow')),
         ...
     ]
 
