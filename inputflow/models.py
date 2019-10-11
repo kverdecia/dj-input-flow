@@ -153,6 +153,6 @@ class Webhook(models.Model):
     def __str__(self):
         return self.name
 
-    def get_webhook_url(self):
-        return reverse('inputflow:inputflow-webhook', args=(self.uid,))
-
+    def get_webhook_url(self, request=None):
+        url = reverse('inputflow:inputflow-webhook', args=(self.uid,))
+        return url if request is None else request.build_absolute_uri(url)

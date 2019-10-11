@@ -1,3 +1,4 @@
+import threading
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.contrib import admin
 from django.forms.widgets import Textarea, TextInput
@@ -5,6 +6,42 @@ from adminsortable.admin import NonSortableParentAdmin, SortableTabularInline
 from . import models
 from django.db.models import TextField, CharField
 
+
+class ModelAdminRequestMixin(admin.ModelAdmin):
+    def __init__(self, *args, **kwargs):
+        self._request_local = threading.local()
+        self._request_local.request = None
+        super(ModelAdminRequestMixin, self).__init__(*args, **kwargs)
+
+    def get_request(self):
+        return self._request_local.request
+
+    def set_request(self, request):
+        self._request_local.request = request
+
+    def changeform_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).changeform_view(request, *args, **kwargs)
+
+    def add_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).add_view(request, *args, **kwargs)
+
+    def change_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).change_view(request, *args, **kwargs)
+
+    def changelist_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).changelist_view(request, *args, **kwargs)
+
+    def delete_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).delete_view(request, *args, **kwargs)
+
+    def history_view(self, request, *args, **kwargs):
+        self.set_request(request)
+        return super(ModelAdminRequestMixin, self).history_view(request, *args, **kwargs)
 
 class TextWidget(Textarea):
     def __init__(self, attrs=None):
@@ -87,7 +124,7 @@ class InputAdmin(admin.ModelAdmin):
     notify_input.short_description = _("Notify inputs")
 
 
-class WebhookAdmin(admin.ModelAdmin):
+class WebhookAdmin(ModelAdminRequestMixin):
     list_display = ('uid', 'name', 'settings', 'url')
     fields = ('uid', 'name', 'description', 'settings', 'url')
     readonly_fields = ('uid', 'url')
@@ -95,7 +132,7 @@ class WebhookAdmin(admin.ModelAdmin):
     def url(self, obj=None):
         if obj is None:
             return None
-        return obj.get_webhook_url()
+        return obj.get_webhook_url(self.get_request())
 
 
 admin.site.register(models.InputSettings, InputSettingsAdmin)
