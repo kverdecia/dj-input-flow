@@ -11,7 +11,7 @@ class TextWidget(Textarea):
         default_attrs = {'cols': '26', 'rows': '3'}
         if attrs:
             default_attrs.update(attrs)
-        super().__init__(default_attrs)
+        super(TextWidget, self).__init__(default_attrs)
 
 
 class CharsWidget(TextInput):
@@ -19,7 +19,7 @@ class CharsWidget(TextInput):
         default_attrs = {'size': '18'}
         if attrs:
             default_attrs.update(attrs)
-        super().__init__(default_attrs)
+        super(CharsWidget, self).__init__(default_attrs)
 
 
 class InputSettingsFieldInline(SortableTabularInline):
