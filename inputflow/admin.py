@@ -56,7 +56,7 @@ class InputAdmin(admin.ModelAdmin):
         'modified', 'raw_content')
     list_filter = ('format', 'internal_source', 'processed', 'created',
         'modified', 'settings')
-    actions = ['update_field_definitions']
+    actions = ['update_field_definitions', 'notify_input']
     
     def get_fields(self, request, obj=None):
         if obj is None:
@@ -79,6 +79,12 @@ class InputAdmin(admin.ModelAdmin):
         if obj is None:
             return None
         return obj.get_data()
+
+    def notify_input(self, request, queryset):
+        for input in queryset:
+            input.notify()
+        self.message_user(request, ugettext("Inputs notified."))
+    notify_input.short_description = _("Notify inputs")
 
 
 class WebhookAdmin(admin.ModelAdmin):

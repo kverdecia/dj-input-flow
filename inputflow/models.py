@@ -15,6 +15,9 @@ from adminsortable.fields import SortableForeignKey
 from .utils import Utils
 
 
+input_notification = django.dispatch.Signal(providing_args=['input_data', 'input_type', 'input_id'])
+
+
 @python_2_unicode_compatible
 class InputSettings(models.Model):
     FORMATS = [
@@ -88,11 +91,6 @@ class Input(models.Model):
         verbose_name = _("Input")
         verbose_name_plural = _("Inputs")
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        input_created.send_robust(sender=self.__class__, input_data=self.get_data(),
-            input_type=self.settings.uid, input_id=self.pk)
-
     def get_raw_dict(self):
         if self.format == 'json':
             return json.loads(self.raw_content)
@@ -133,7 +131,10 @@ class Input(models.Model):
                     field.default_value or None)
         return result
 
-input_created = django.dispatch.Signal(providing_args=['input_data', 'input_type'])
+    def notify(self):
+        input_notification.send_robust(sender=self.__class__, input_data=self.get_data(),
+            input_type=self.settings.uid, input_id=self.pk)
+
 
 
 @python_2_unicode_compatible

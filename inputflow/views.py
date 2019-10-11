@@ -15,4 +15,5 @@ def webhook(request, uid):
     input.format = 'form' if request.META['CONTENT_TYPE'] == 'application/x-www-form-urlencoded' else 'json'
     input.raw_content = request.body.decode('utf-8')
     input.save()
+    input.notify()
     return HttpResponse("Ok")
