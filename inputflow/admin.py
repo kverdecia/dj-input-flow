@@ -1,4 +1,5 @@
 import threading
+import pprint
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.contrib import admin
 from django.forms.widgets import Textarea, TextInput
@@ -115,7 +116,7 @@ class InputAdmin(admin.ModelAdmin):
     def data(self, obj=None):
         if obj is None:
             return None
-        return obj.get_data()
+        return pprint.pformat(obj.get_data(), indent=4)
 
     def notify_input(self, request, queryset):
         for input in queryset:
