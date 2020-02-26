@@ -98,9 +98,9 @@ class InputAdmin(admin.ModelAdmin):
     
     def get_fields(self, request, obj=None):
         if obj is None:
-            return ('settings', 'format', 'processed', 'raw_content')
+            return ('settings', 'format', 'processed', 'raw_content', 'raw_content_type')
         return ('settings', 'internal_source', 'format', 'processed', 'raw_content',
-            'created', 'modified', 'data')
+            'raw_content_type', 'created', 'modified', 'data')
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:

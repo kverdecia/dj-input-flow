@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -18,7 +19,9 @@ def webhook(request, uid):
     if request.META['CONTENT_TYPE'].startswith('application/x-www-form-urlencoded'):
         input.format = 'form'
     elif request.META['CONTENT_TYPE'].startswith('multipart/form-data'):
-        input.format = 'multipart'
+        input.raw_content = json.dumps(request.POST.dict())
+        input.raw_content_type = ''
+        input.format = 'json'
     else:
         input.format = 'json'
     input.save()
