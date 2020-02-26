@@ -12,8 +12,15 @@ def webhook(request, uid):
     input = models.Input()
     input.settings =  webhook.settings
     input.internal_source = False
-    input.format = 'form' if request.META['CONTENT_TYPE'] == 'application/x-www-form-urlencoded' else 'json'
+    
     input.raw_content = request.body.decode('utf-8')
+    input.raw_content_type = request.META['CONTENT_TYPE']
+    if request.META['CONTENT_TYPE'].startswith('application/x-www-form-urlencoded'):
+        input.format = 'form'
+    elif request.META['CONTENT_TYPE'].startswith('multipart/form-data'):
+        input.format = 'multipart'
+    else:
+        input.format = 'json'
     input.save()
     input.notify()
     return HttpResponse("Ok")

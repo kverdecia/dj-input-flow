@@ -22,6 +22,7 @@ input_notification = django.dispatch.Signal(providing_args=['input_data', 'input
 class InputSettings(models.Model):
     FORMATS = [
         ('form', _("Form")),
+        ('multipart', _("Multipart form")),
         ('json', _("JSON"))
     ]
     uid = models.UUIDField(_("UID"), max_length=60, unique=True, default=uuid.uuid4,
@@ -84,6 +85,7 @@ class Input(models.Model):
         choices=InputSettings.FORMATS)
     processed = models.BooleanField(_("Processed"), blank=True, default=False)
     raw_content = models.TextField(_("Raw content"))
+    raw_content_type = models.CharField(_("Raw content type"), max_length=250, blank=True, default='')
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True, null=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True, blank=True, null=True)
 
