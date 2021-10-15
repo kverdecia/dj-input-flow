@@ -4,14 +4,19 @@ import datetime
 from collections import OrderedDict
 import uuid
 import json
+
+from django.urls import reverse
+import django.dispatch
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.six import python_2_unicode_compatible
 from django.utils.six.moves.urllib.parse import parse_qs
-from django.urls import reverse
-from django.db import models
-import django.dispatch
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 from adminsortable.models import SortableMixin
 from adminsortable.fields import SortableForeignKey
+
 from .utils import Utils
 
 
@@ -86,6 +91,13 @@ class Input(models.Model):
     processed = models.BooleanField(_("Processed"), blank=True, default=False)
     raw_content = models.TextField(_("Raw content"))
     raw_content_type = models.CharField(_("Raw content type"), max_length=250, blank=True, default='')
+
+    related_model = models.ForeignKey(ContentType, blank=True, null=True, default=None,
+        on_delete=models.SET_NULL, editable=False)
+    related_model_object_id = models.PositiveIntegerField(blank=True, null=True, default=None,
+        editable=False)
+    content_object = GenericForeignKey('related_model', 'related_model_object_id', )
+
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True, null=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True, blank=True, null=True)
 
