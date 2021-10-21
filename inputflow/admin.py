@@ -1,5 +1,8 @@
 import threading
 import pprint
+from django.urls import reverse
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.contrib import admin
 from django.forms.widgets import Textarea, TextInput
@@ -43,6 +46,7 @@ class ModelAdminRequestMixin(admin.ModelAdmin):
     def history_view(self, request, *args, **kwargs):
         self.set_request(request)
         return super(ModelAdminRequestMixin, self).history_view(request, *args, **kwargs)
+
 
 class TextWidget(Textarea):
     def __init__(self, attrs=None):
@@ -91,11 +95,19 @@ class InputSettingsAdmin(NonSortableParentAdmin):
 
 class InputAdmin(admin.ModelAdmin):
     list_display = ('settings', 'format', 'internal_source', 'processed',
+        'get_related_model',
         'modified', 'raw_content')
     list_filter = ('format', 'internal_source', 'processed', 'created',
         'modified', 'settings')
     actions = ['update_field_definitions', 'notify_input']
-    
+
+    def get_related_model(self, obj):
+        view_name = 'admin:{}_{}_change'.format(obj.related_model.app_label, obj.related_model.model)
+        url = reverse(view_name, args=(obj.related_model_object_id,))
+        name = escape('{}:{}'.format(obj.related_model, obj.related_model_object_id))
+        return mark_safe('<a href="{}">{}</a>'.format(url, name))
+    get_related_model.short_description = _("Related model")
+
     def get_fields(self, request, obj=None):
         if obj is None:
             return ('settings', 'format', 'processed', 'raw_content', 'raw_content_type')
