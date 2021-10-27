@@ -102,6 +102,8 @@ class InputAdmin(admin.ModelAdmin):
     actions = ['update_field_definitions', 'notify_input']
 
     def get_related_model(self, obj):
+        if obj.related_model is None:
+            return None
         view_name = 'admin:{}_{}_change'.format(obj.related_model.app_label, obj.related_model.model)
         url = reverse(view_name, args=(obj.related_model_object_id,))
         name = escape('{}:{}'.format(obj.related_model, obj.related_model_object_id))
