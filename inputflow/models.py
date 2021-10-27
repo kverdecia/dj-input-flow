@@ -96,7 +96,7 @@ class Input(models.Model):
         on_delete=models.SET_NULL, editable=False)
     related_model_object_id = models.PositiveIntegerField(blank=True, null=True, default=None,
         editable=False)
-    content_object = GenericForeignKey('related_model', 'related_model_object_id', )
+    related_object = GenericForeignKey('related_model', 'related_model_object_id', )
 
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True, null=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True, blank=True, null=True)
